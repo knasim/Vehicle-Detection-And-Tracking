@@ -1,5 +1,4 @@
-## Vehicle Detection
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+## Vehicle Detection And Tracking
 
 ---
 
@@ -25,16 +24,13 @@ The goals / steps of this project are the following:
 
 [video1]: ./project_video.mp4
 
-## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
-### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
-
 ---
 
 ### Histogram of Oriented Gradients (HOG)
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The code for this step is contained in (main.py lines 18-27).  
+The code for this step is contained in (main.py lines 18-27).
 
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
@@ -43,7 +39,7 @@ Final choice for the chosen values of HOG parameters were mostly based on trial 
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a  `linear SVM` (main.py lines 70-73).  The classifier used is the `LinearSVC` from `scikit`.  To achieve standardization I applied a `StandardScaler`.  
+I trained a  `linear SVM` (main.py lines 70-73).  The classifier used is the `LinearSVC` from `scikit`.  To achieve standardization I applied a `StandardScaler`.
 Standardization of a dataset is a common requirement for many machine learning estimators otherwise they might behave badly if the individual feature do not more
 or less look like standard normally distributed data (e.g. Gaussian with 0 mean and unit variance).
 
@@ -57,7 +53,6 @@ rectangles reduced, however, they did not disappear completely.
 As a consequence the HOG parameters and to be further manually tuned.
 
 Here are some example images:
-
 ![alt text][image8]
 
 ---
@@ -77,7 +72,7 @@ There are functions in (function.py lines 361-392) that handle false positives b
 
 ### Discussion
 
-A linear SVM/HOG approach as I learnt produces false positives and this is a challenge. Execution speeds frames per second (FPS) can be area of improvement.  
+A linear SVM/HOG approach as I learnt produces false positives and this is a challenge. Execution speeds frames per second (FPS) can be area of improvement.
 I also feel some aspects of the program that run sequentially could benefit from parallelization.  A CPU was used for this project.   False positives were not entirely eliminated
 even after heatmap filtering, and this can be anther area for improvement.
 

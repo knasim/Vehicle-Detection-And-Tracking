@@ -1,5 +1,4 @@
-## Vehicle Detection
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+## Vehicle Detection And Tracking
 
 ---
 
@@ -24,9 +23,6 @@ The goals / steps of this project are the following:
 [image9]: ./output_images/car_postions_heat_map.png
 
 [video1]: ./project_video.mp4
-
-## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
-### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ---
 
@@ -57,7 +53,6 @@ rectangles reduced, however, they did not disappear completely.
 As a consequence the HOG parameters and to be further manually tuned.
 
 Here are some example images:
-
 ![alt text][image8]
 
 ---
