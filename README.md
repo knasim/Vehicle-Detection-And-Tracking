@@ -1,37 +1,85 @@
-# Vehicle Detection
-[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
+## Vehicle Detection
+### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
 
-
-In this project, your goal is to write a software pipeline to detect vehicles in a video (start with the test_video.mp4 and later implement on full project_video.mp4), but the main output or product we want you to create is a detailed writeup of the project.  Check out the [writeup template](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) for this project and use it as a starting point for creating your own writeup.  
-
-Creating a great writeup:
----
-A great writeup should include the rubric points as well as your description of how you addressed each point.  You should include a detailed description of the code used in each step (with line-number references and code snippets where necessary), and links to other supporting documents or external references.  You should include images in your writeup to demonstrate how your code works with examples.  
-
-All that said, please be concise!  We're not looking for you to write a book here, just a brief description of how you passed each rubric point, and references to the relevant code :). 
-
-You can submit your writeup in markdown or use another method and submit a pdf instead.
-
-The Project
 ---
 
 The goals / steps of this project are the following:
 
 * Perform a Histogram of Oriented Gradients (HOG) feature extraction on a labeled training set of images and train a classifier Linear SVM classifier
-* Optionally, you can also apply a color transform and append binned color features, as well as histograms of color, to your HOG feature vector. 
+* Optionally, you can also apply a color transform and append binned color features, as well as histograms of color, to your HOG feature vector.
 * Note: for those first two steps don't forget to normalize your features and randomize a selection for training and testing.
 * Implement a sliding-window technique and use your trained classifier to search for vehicles in images.
 * Run your pipeline on a video stream (start with the test_video.mp4 and later implement on full project_video.mp4) and create a heat map of recurring detections frame by frame to reject outliers and follow detected vehicles.
 * Estimate a bounding box for vehicles detected.
 
-Here are links to the labeled data for [vehicle](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/vehicles.zip) and [non-vehicle](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/non-vehicles.zip) examples to train your classifier.  These example images come from a combination of the [GTI vehicle image database](http://www.gti.ssr.upm.es/data/Vehicle_database.html), the [KITTI vision benchmark suite](http://www.cvlibs.net/datasets/kitti/), and examples extracted from the project video itself.   You are welcome and encouraged to take advantage of the recently released [Udacity labeled dataset](https://github.com/udacity/self-driving-car/tree/master/annotations) to augment your training data.  
+[//]: # (Image References)
+[image1]: ./examples/car_not_car.png
+[image2]: ./examples/HOG_example.jpg
+[image3]: ./examples/sliding_windows.jpg
+[image4]: ./examples/sliding_window.jpg
+[image5]: ./examples/bboxes_and_heat.png
+[image6]: ./examples/labels_map.png
+[image7]: ./examples/output_bboxes.png
+[image8]: ./output_images/detection.png
+[image9]: ./output_images/car_postions_heat_map.png
 
-Some example images for testing your pipeline on single frames are located in the `test_images` folder.  To help the reviewer examine your work, please save examples of the output from each stage of your pipeline in the folder called `ouput_images`, and include them in your writeup for the project by describing what each image shows.    The video called `project_video.mp4` is the video your pipeline should work well on.  
+[video1]: ./project_video.mp4
 
-**As an optional challenge** Once you have a working pipeline for vehicle detection, add in your lane-finding algorithm from the last project to do simultaneous lane-finding and vehicle detection!
+## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
+### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
-**If you're feeling ambitious** (also totally optional though), don't stop there!  We encourage you to go out and take video of your own, and show us how you would implement this project on a new video!
+---
 
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+### Histogram of Oriented Gradients (HOG)
 
+#### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
+
+The code for this step is contained in (main.py lines 18-27).  
+
+
+#### 2. Explain how you settled on your final choice of HOG parameters.
+
+Final choice for the chosen values of HOG parameters were mostly based on trial and error in order to arrive at a suitable value combination. For color_space (main.py line 18) I ended going with `YCrCb` because it had least false positives as opposed to `RGB`. Under varying light conditions RGB is not good.
+
+#### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+
+I trained a  `linear SVM` (main.py lines 70-73).  The classifier used is the `LinearSVC` from `scikit`.  To achieve standardization I applied a `StandardScaler`.  
+Standardization of a dataset is a common requirement for many machine learning estimators otherwise they might behave badly if the individual feature do not more
+or less look like standard normally distributed data (e.g. Gaussian with 0 mean and unit variance).
+
+### Sliding Window Search
+
+#### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+
+Initially plenty of false rectangles were observed which required increasing the overlap.
+This did help in reducing false rectangles but they were not eliminated. The number of false
+rectangles reduced, however, they did not disappear completely.
+As a consequence the HOG parameters and to be further manually tuned.
+
+Here are some example images:
+
+![alt text][image8]
+
+---
+
+### Video Implementation dddd
+Here's a direct YouTube link [link to my video result](https://youtu.be/6HqLwyT6V50)
+
+Here's a [link to my video result](./output.mp4)
+
+
+#### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+There are functions in (function.py lines 361-392) that handle false positives by filtering using a heatmap as well as d etermining bounding boxes.
+
+![alt text][image9]
+
+---
+
+### Discussion
+
+A linear SVM/HOG approach as I learnt produces false positives and this is a challenge. Execution speeds frames per second (FPS) can be area of improvement.  
+I also feel some aspects of the program that run sequentially could benefit from parallelization.  A CPU was used for this project.   False positives were not entirely eliminated
+even after heatmap filtering, and this can be anther area for improvement.
+
+I also took a peek at an advanced Deep net called YOLO (you only look once).  This could be a very exciting application for this project I think just see the comparision between
+SVM + HOG vs. YOLO
