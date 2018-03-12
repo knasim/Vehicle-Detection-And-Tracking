@@ -74,7 +74,7 @@ There are functions in (function.py lines 361-392) that handle false positives b
 
 A linear SVM/HOG approach as I learnt produces false positives and this is a challenge. Execution speeds frames per second (FPS) can be area of improvement.
 I also feel some aspects of the program that run sequentially could benefit from parallelization.  A CPU was used for this project.   False positives were not entirely eliminated
-even after heatmap filtering, and this can be anther area for improvement.
+even after heatmap filtering, and this can be another area for improvement.
 
 I also took a peek at an advanced Deep net called YOLO (you only look once).  This could be a very exciting application for this project I think just see the comparision between
 SVM + HOG vs. YOLO
